@@ -16,6 +16,7 @@ import (
 )
 
 var (
+	output  = flag.String("output", "", "output file name")
 	inline  = flag.Bool("inline", false, "parse rule inlining")
 	_switch = flag.Bool("switch", false, "replace if-else if-else like blocks with switch blocks")
 	print   = flag.Bool("print", false, "directly dump the syntax tree")
@@ -55,6 +56,10 @@ func main() {
 	}
 
 	filename := file + ".go"
+	if *output != "" {
+		filename = *output
+	}
+
 	out, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		fmt.Printf("%v: %v\n", filename, err)
